@@ -24,8 +24,8 @@ public class FieldCell
         get => _state;
     }
 
-    public int GenerateMoney()
+    public void GenerateMoney()
     {
-        return (int)Mathf.Pow(2, _state.Value);
+        PlayerStats.Money += (int)Mathf.Pow(2, _state.Value);
     }
 }

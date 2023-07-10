@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class DraggableObject : MonoBehaviour
 {
-    private bool dragging = false;
+    public bool dragging = false;
     private Vector3 offset;
     public CellView cell;
     public CellView howerCell;
@@ -17,6 +17,7 @@ public class DraggableObject : MonoBehaviour
         {
             transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offset;
         }
+        
     }
 
     private void OnMouseDown()
@@ -28,7 +29,7 @@ public class DraggableObject : MonoBehaviour
     private void OnMouseUp()
     {
         dragging = false;
-        if (howerCell != null && cell != howerCell && cell.fieldCell.State == howerCell.fieldCell.State)
+        if (howerCell != null && cell != howerCell && cell.fieldCell.State.Value == howerCell.fieldCell.State.Value)
         {
             cell.fieldCell.State.Value = 0;
             howerCell.fieldCell.State.Value++;
@@ -46,11 +47,12 @@ public class DraggableObject : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerExit2D(Collider2D col)
     {
-        if (other.CompareTag("Cell"))
+        if (col.CompareTag("Cell") && dragging)
         {
             howerCell = null;
         }
+        
     }
 }

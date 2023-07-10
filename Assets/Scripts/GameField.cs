@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using TMPro;
 using Unity.VisualScripting;
+using UnityEngine.SocialPlatforms;
 using Random = UnityEngine.Random;
 
 public class GameField : MonoBehaviour
@@ -16,7 +18,7 @@ public class GameField : MonoBehaviour
     public Vector2Int fieldSize;
     private GameObject selectedObject;
     public CellView cellPrefab;
-
+    public TextMeshProUGUI moneyValue;
     private void Start()
     {
         cells = new List<FieldCell>();
@@ -36,17 +38,17 @@ public class GameField : MonoBehaviour
         {
             GetCellWithState(0).State.Value++;
         }
+
+        PlayerStats.OnValueReset += SpawnNewBuilding;
+
+        StartCoroutine(GenerateMoney());
     }
-
-    private void Update()
-    {
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    }
-
-
+    
     public FieldCell GetCellWithState(int state)
     {
-        return cells.FirstOrDefault(cell => cell.State.Value == state);
+        var rand = new System.Random();
+        var chosenCells = cells.Where(cell => cell.State.Value == state);
+        return chosenCells.Skip(rand.Next(chosenCells.Count())).FirstOrDefault();
     }
 
     IEnumerator GenerateMoney()
@@ -57,6 +59,7 @@ public class GameField : MonoBehaviour
             foreach (var cell in cells)
             {
                 cell.GenerateMoney();
+                moneyValue.text = PlayerStats.Money.ToString();
             }
         }
     }
@@ -65,5 +68,10 @@ public class GameField : MonoBehaviour
     {
         return new Vector3(X_START + X_SPACE_BETWEEN_ITEMS * i,
             Y_START + -Y_SPACE_BETWEEN_ITEMS * j, 0f);
+    }
+
+    public void SpawnNewBuilding()
+    {
+        GetCellWithState(0).State.Value++;
     }
 }

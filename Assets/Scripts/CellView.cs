@@ -21,12 +21,18 @@ public class CellView : MonoBehaviour
         if (value < 0)
         {
             site.color = Color.grey;
-            building.gameObject.SetActive(false);
         }
         else
         {
+            if (value == 0)
+            {
+                building.gameObject.SetActive(false);
+            }
+            else
+            {
+                building.gameObject.SetActive(true);
+            }
             site.color = Color.white;
-            building.gameObject.SetActive(true);
             building.transform.localScale = Vector3.one * (1 + (fieldCell.State.Value - 1) * 0.25f);
         }
     }
