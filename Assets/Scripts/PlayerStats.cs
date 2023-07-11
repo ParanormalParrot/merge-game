@@ -24,13 +24,13 @@ public static class PlayerStats
         set
         {
             _points = value;
-            if (value > 5)
+            if (_points >= 5)
             {
-                _points %= 5;
+                _points = 0;
                 OnValueReset?.Invoke();
             }
 
-            OnValueChanged?.Invoke(value);
+            OnValueChanged?.Invoke(_points);
         }
     }
 }

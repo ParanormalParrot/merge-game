@@ -27,7 +27,7 @@ public class GameField : MonoBehaviour
             for (int j = 0; j < fieldSize.y; j++)
             {
                 CellView newCellView = Instantiate(cellPrefab, Vector3.zero, Quaternion.identity, transform);
-                FieldCell newFieldCell = new FieldCell(new Vector2Int(i, j), new MinMaxInt(0, 0, 10));
+                FieldCell newFieldCell = new FieldCell(new Vector2Int(i, j), new MinMaxInt(-1, -1, 10));
                 newCellView.Init(newFieldCell);
                 newCellView.transform.localPosition = GetPosition(i, j);
                 cells.Add(newFieldCell);
@@ -36,7 +36,7 @@ public class GameField : MonoBehaviour
 
         for (int i = 0; i < 4; i++)
         {
-            GetCellWithState(0).State.Value++;
+            GetCellWithState(-1).State.Value++;
         }
 
         PlayerStats.OnValueReset += SpawnNewBuilding;
@@ -72,6 +72,11 @@ public class GameField : MonoBehaviour
 
     public void SpawnNewBuilding()
     {
-        GetCellWithState(0).State.Value++;
+        FieldCell cell = GetCellWithState(0);
+        if (cell != null)
+        {
+            cell.State.Value++;
+        }
+        
     }
 }
