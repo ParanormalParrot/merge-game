@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class DraggableObject : MonoBehaviour
+public class BuildingDraggableObject : MonoBehaviour
 {
     public bool dragging = false;
     private Vector3 offset;
