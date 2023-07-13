@@ -6,36 +6,35 @@ using UnityEngine;
 
 public class BuildingDraggableObject : MonoBehaviour
 {
-    public bool dragging = false;
-    private Vector3 offset;
+    private bool dragging = false;
+    private Vector3 _offset;
+    private CellView _hoverCell;
     public CellView cell;
-    public CellView howerCell;
 
     private void Update()
     {
         if (dragging)
         {
-            transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offset;
+            transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + _offset;
         }
-        
     }
 
     private void OnMouseDown()
     {
-        offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        _offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
         dragging = true;
     }
 
     private void OnMouseUp()
     {
         dragging = false;
-        if (howerCell != null && cell != howerCell && cell.fieldCell.State.Value == howerCell.fieldCell.State.Value)
+        if (_hoverCell != null && cell != _hoverCell && cell.fieldCell.State.Value == _hoverCell.fieldCell.State.Value)
         {
             cell.fieldCell.State.Value = 0;
-            howerCell.fieldCell.State.Value++;
+            _hoverCell.fieldCell.State.Value++;
         }
+
         transform.position = cell.transform.position;
-        
     }
 
 
@@ -43,7 +42,7 @@ public class BuildingDraggableObject : MonoBehaviour
     {
         if (col.CompareTag("Cell"))
         {
-            howerCell = col.GetComponentInChildren<CellView>();
+            _hoverCell = col.GetComponentInChildren<CellView>();
         }
     }
 
@@ -51,8 +50,7 @@ public class BuildingDraggableObject : MonoBehaviour
     {
         if (col.CompareTag("Cell") && dragging)
         {
-            howerCell = null;
+            _hoverCell = null;
         }
-        
     }
 }

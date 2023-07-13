@@ -5,25 +5,25 @@ using UnityEngine;
 
 public class ObservableInt
 {
-    private int value;
+    private int _value;
 
     virtual public int Value
     {
-        get { return value; }
+        get { return _value; }
         set
         {
-            if (this.value != value)
+            if (_value != value)
             {
-                this.value = value;
+                _value = value;
                 OnValueChanged?.Invoke(value);
             }
         }
     }
 
-    public event System.Action<int> OnValueChanged;
+    public event Action<int> OnValueChanged;
 
     public ObservableInt(int value)
     {
-        this.value = value;
+        _value = value;
     }
 }

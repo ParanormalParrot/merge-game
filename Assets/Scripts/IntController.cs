@@ -9,19 +9,19 @@ public class IntController : MonoBehaviour
     public InputField inputField;
     public ValueVisual valueVisual;
 
-    private MinMaxInt minMaxInt;
+    private MinMaxInt _minMaxInt;
 
     private void Start()
     {
-        minMaxInt = new MinMaxInt(0, 0, 10);
-        valueVisual.Init(minMaxInt);
+        _minMaxInt = new MinMaxInt(0, 0, 10);
+        valueVisual.Init(_minMaxInt);
     }
 
     public void UpdateValue()
     {
         if (int.TryParse(inputField.text, out int newValue))
         {
-            minMaxInt.Value = newValue;
+            _minMaxInt.Value = newValue;
         }
     }
 }

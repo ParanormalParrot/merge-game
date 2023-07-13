@@ -302,13 +302,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7d65220b306c1a45a59b42c11a60b6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  X_START: -100
-  Y_START: 100
-  X_SPACE_BETWEEN_ITEMS: 100
-  Y_SPACE_BETWEEN_ITEMS: 100
-  fieldSize: {x: 3, y: 3}
+  x_start: -100
+  y_start: 100
+  x_space_between_items: 100
+  y_space_between_items: 100
   cellPrefab: {fileID: 2379024762912924794, guid: 80bd5796e8beaf44588be415b7a8e277, type: 3}
   moneyValue: {fileID: 2129960742}
+  fieldSize: {x: 3, y: 3}
 --- !u!1 &175530769
 GameObject:
   m_ObjectHideFlags: 0

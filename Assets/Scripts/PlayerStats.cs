@@ -4,8 +4,8 @@ using UnityEngine;
 
 public static class PlayerStats
 {
-    private static int _money = 0;
-    private static int _points = 0;
+    private static int _money;
+    private static int _points;
 
     public static event System.Action<int> OnValueChanged;
     public static event System.Action OnValueReset;
@@ -14,7 +14,6 @@ public static class PlayerStats
     {
         get => _money;
         set => _money = value;
-
     }
 
 

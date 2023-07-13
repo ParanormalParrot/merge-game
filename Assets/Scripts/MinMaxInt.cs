@@ -5,22 +5,22 @@ using UnityEngine;
 
 public class MinMaxInt : ObservableInt
 {
-    private int minValue;
-    private int maxValue;
+    private int _minValue;
+    private int _maxValue;
 
     override public int Value
     {
         get { return base.Value; }
         set
         {
-            int clampedValue = Mathf.Clamp(value, minValue, maxValue);
+            int clampedValue = Mathf.Clamp(value, _minValue, _maxValue);
             base.Value = clampedValue;
         }
     }
 
     public MinMaxInt(int value, int minValue, int maxValue) : base(value)
     {
-        this.minValue = minValue;
-        this.maxValue = maxValue;
+        this._minValue = minValue;
+        this._maxValue = maxValue;
     }
 }
