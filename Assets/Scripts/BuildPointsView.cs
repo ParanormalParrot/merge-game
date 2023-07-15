@@ -10,10 +10,12 @@ public class BuildPointsView : MonoBehaviour
 
     public TextMeshProUGUI text;
 
+    public PlayerStats stats;
+
     void Start()
     {
         slider.maxValue = 5;
-        PlayerStats.OnValueChanged += UpdateValues;
+        stats.OnValueChanged += UpdateValues;
     }
 
     private void UpdateValues(int value)
@@ -24,6 +26,6 @@ public class BuildPointsView : MonoBehaviour
 
     public void ButtonPress()
     {
-        PlayerStats.Points += 1;
+        stats.Points++;
     }
 }

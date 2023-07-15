@@ -1,23 +1,37 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public static class PlayerStats
+
+[CreateAssetMenu(fileName = "New Player Stats", menuName = "Player Stat")]
+public class PlayerStats : ScriptableObject
 {
-    private static int _money;
-    private static int _points;
+    private int _money;
+    private int _points;
 
-    public static event System.Action<int> OnValueChanged;
-    public static event System.Action OnValueReset;
+    public event Action<int> OnValueChanged;
+    public event Action OnValueReset;
 
-    public static int Money
+
+    private void OnEnable()
+    {
+        OnValueChanged = null;
+        OnValueReset = null;
+        _money = 0;
+        _points = 0;
+    }
+
+
+    public int Money
     {
         get => _money;
         set => _money = value;
     }
 
 
-    public static int Points
+    public int Points
     {
         get => _points;
         set

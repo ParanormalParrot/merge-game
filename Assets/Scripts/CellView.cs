@@ -14,6 +14,7 @@ public class CellView : MonoBehaviour
     {
         fieldCell = cell;
         fieldCell.State.OnValueChanged += UpdateView;
+        UpdateView(fieldCell.State.Value);
     }
 
     public void UpdateView(int value)

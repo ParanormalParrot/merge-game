@@ -20,7 +20,7 @@ public class MinMaxInt : ObservableInt
 
     public MinMaxInt(int value, int minValue, int maxValue) : base(value)
     {
-        this._minValue = minValue;
-        this._maxValue = maxValue;
+        _minValue = minValue;
+        _maxValue = maxValue;
     }
 }

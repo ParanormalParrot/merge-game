@@ -22,9 +22,5 @@ public class FieldCell
     {
         get => _state;
     }
-
-    public void GenerateMoney()
-    {
-        PlayerStats.Money += (int)Mathf.Pow(2, _state.Value);
-    }
+    
 }

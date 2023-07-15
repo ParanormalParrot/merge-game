@@ -11,29 +11,34 @@ using Random = UnityEngine.Random;
 
 public class GameField : MonoBehaviour
 {
-    public int x_start;
-    public int y_start;
-    public int x_space_between_items;
-    public int y_space_between_items;
-    public CellView cellPrefab;
     public TextMeshProUGUI moneyValue;
-    public Vector2Int fieldSize;
+    private Vector2Int _fieldSize;
     private List<FieldCell> _cells;
-    private GameObject _selectedObject;
     private bool _gettingMoney;
+    public PlayerStats stats;
 
-    
-    private void Start()
+
+    public Vector2Int FieldSize
     {
+        get => _fieldSize;
+    }
+
+    public List<FieldCell> Cells
+    {
+        get => _cells;
+    }
+
+
+    public void Init(Vector2Int size)
+    {
+        _fieldSize = size;
+        _gettingMoney = true;
         _cells = new List<FieldCell>();
-        for (int i = 0; i < fieldSize.x; i++)
+        for (int i = 0; i < _fieldSize.x; i++)
         {
-            for (int j = 0; j < fieldSize.y; j++)
+            for (int j = 0; j < _fieldSize.y; j++)
             {
-                CellView newCellView = Instantiate(cellPrefab, Vector3.zero, Quaternion.identity, transform);
                 FieldCell newFieldCell = new FieldCell(new Vector2Int(i, j), new MinMaxInt(-1, -1, 10));
-                newCellView.Init(newFieldCell);
-                newCellView.transform.localPosition = GetPosition(i, j);
                 _cells.Add(newFieldCell);
             }
         }
@@ -43,12 +48,12 @@ public class GameField : MonoBehaviour
             GetCellWithState(-1).State.Value++;
         }
 
-        PlayerStats.OnValueReset += SpawnNewBuilding;
+        stats.OnValueReset += SpawnNewBuilding;
 
         _gettingMoney = true;
         StartCoroutine(GenerateMoney());
     }
-    
+
     public FieldCell GetCellWithState(int state)
     {
         var rand = new System.Random();
@@ -63,17 +68,15 @@ public class GameField : MonoBehaviour
             yield return new WaitForSeconds(1);
             foreach (var cell in _cells)
             {
-                cell.GenerateMoney();
-                moneyValue.text = PlayerStats.Money.ToString();
+                if (cell.State.Value > 0)
+                {
+                    stats.Money += (int)Mathf.Pow(2, cell.State.Value);
+                    moneyValue.text = stats.Money.ToString();
+                }
             }
         }
     }
 
-    public Vector3 GetPosition(int i, int j)
-    {
-        return new Vector3(x_start + x_space_between_items * i,
-            y_start + -y_space_between_items * j, 0f);
-    }
 
     public void SpawnNewBuilding()
     {
@@ -82,6 +85,5 @@ public class GameField : MonoBehaviour
         {
             cell.State.Value++;
         }
-        
     }
 }
